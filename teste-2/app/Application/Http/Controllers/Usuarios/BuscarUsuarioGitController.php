@@ -2,6 +2,7 @@
 
 namespace Application\Http\Controllers\Usuarios;
 
+use Application\Exceptions\BaseExcpetion;
 use Domain\Usuarios\Interfaces\Services\IUsuarioService;
 use Illuminate\Http\Request;
 
@@ -12,6 +13,11 @@ class BuscarUsuarioGitController
         IUsuarioService $usuarioService
     )
     {
-        return $usuarioService->getUsuarioByUsername($request->get('username'));
+        try {
+            return $usuarioService->getUsuarioByUsername($request->get('username'));
+        } catch (BaseExcpetion $exception) {
+            dd($exception->getMessage());
+        }
+
     }
 }

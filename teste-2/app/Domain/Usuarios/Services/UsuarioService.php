@@ -23,13 +23,13 @@ class UsuarioService implements IUsuarioService
         $this->usuarioRepository = $usuarioRepository;
     }
 
-
     /**
      * @param string $username
      * @return Collection
      */
     public function getUsuarioByUsername(string $username): Collection
     {
-        return collect($this->gitHubApi->getUsuarioByUsername($username));
+        $response  = $this->gitHubApi->getUsuarioByUsername($username);
+        return collect($response);
     }
 }

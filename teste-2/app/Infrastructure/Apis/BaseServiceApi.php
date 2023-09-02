@@ -2,6 +2,7 @@
 
 namespace Infrastructure\Apis;
 
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
 class BaseServiceApi
@@ -58,7 +59,7 @@ class BaseServiceApi
      * @return mixed
      * @throws \Exception
      */
-    protected function request(string $method, string $uri)
+    protected function request(string $method, string $uri): Collection
     {
         $this->updateBaseUrl($uri);
         $this->setHeaders(["User-Agent: " . Str::afterLast($uri, '/')]);
@@ -67,11 +68,14 @@ class BaseServiceApi
             $ch = curl_init($uri);
 
             send_log("Log de request -> {$uri}: ", [$this->baseUrl, $method, $uri]);
+
             curl_setopt($ch, CURLOPT_URL, $this->baseUrl);
             curl_setopt($ch, CURLOPT_HTTPHEADER, $this->headers);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
             $response = curl_exec($ch);
+
+            $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
             curl_close($ch);
 
             if (!$response) {
@@ -84,14 +88,31 @@ class BaseServiceApi
             throw $exception;
         }
 
-        send_log("Log de response -> {$uri}: ", [$uri]);
+        send_log("Log de response -> {$uri}: ", [$uri, $response]);
 
-        return $response;
+        return $this->returnResponseBase($response, $httpCode);
     }
 
+    /**
+     * @param string $uri
+     */
     protected function updateBaseUrl(string $uri)
     {
         $this->baseUrl = $this->baseUrl . $uri;
+    }
+
+    /**
+     * @param string $response
+     * @param int $code
+     * @return \Illuminate\Support\Collection
+     */
+    protected function returnResponseBase(string $response, int $code): Collection
+    {
+        $response = json_decode($response, true);
+        $response['success'] = ($code >= 200 && $code < 300);
+        $response['code'] = $code;
+
+        return collect($response);
     }
 
 }
