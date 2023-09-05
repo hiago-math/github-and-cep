@@ -1,6 +1,7 @@
 <?php
 
-use Application\Http\Controllers\Usuarios\BuscarUsuarioGitController;
+
+use Application\Http\Controllers\Users\SearchUserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,5 +16,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['prefix' => 'users'], function () {
-    Route::get('', BuscarUsuarioGitController::class);
+    Route::get('search', SearchUserController::class);
 });

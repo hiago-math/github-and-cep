@@ -1,10 +1,11 @@
 <?php
 
-namespace Infrastructure\Apis\GitHubApi\Services;
+namespace Infrastructure\Apis\GitHub\Services;
 
 use Application\Exceptions\Response\InvalidResponseException;
+use Illuminate\Support\Collection;
 use Infrastructure\Apis\BaseServiceApi;
-use Infrastructure\Apis\GitHubApi\Interfaces\IGitHubApi;
+use Infrastructure\Apis\GitHub\Interfaces\IGitHubApi;
 
 class GitHubApi extends BaseServiceApi implements IGitHubApi
 {
@@ -14,10 +15,9 @@ class GitHubApi extends BaseServiceApi implements IGitHubApi
     }
 
     /**
-     * @param string $username
-     * @return array
+     * {@inheritDoc}
      */
-    public function getUsuarioByUsername(string $username): array
+    public function getUserByUsername(string $username): Collection
     {
         $response = $this->request('GET', "users/$username");
 
@@ -25,6 +25,6 @@ class GitHubApi extends BaseServiceApi implements IGitHubApi
             throw new InvalidResponseException($response->get('code'));
         }
 
-        return json_decode($response, true);
+        return collect(json_decode($response, true));
     }
 }

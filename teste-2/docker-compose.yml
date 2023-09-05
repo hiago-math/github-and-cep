@@ -42,7 +42,8 @@ services:
             - MyNetwork
 
     mysql:
-        container_name: app_mysql
+        container_name: mysql
+        restart: always
         command: --init-file /docker-entrypoint-initdb.d/structure.sql
         env_file:
           - .env

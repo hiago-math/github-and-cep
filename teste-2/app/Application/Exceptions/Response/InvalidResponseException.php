@@ -9,7 +9,7 @@ class InvalidResponseException extends BaseExcpetion
 {
     public function __construct($code = 0, Throwable $previous = null)
     {
-        $message = trans("exception.$code");
+        $message = trans("user_git_exception.$code");
         parent::__construct($message, $code, $previous);
     }
 
