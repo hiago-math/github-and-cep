@@ -1,5 +1,7 @@
 <?php
 
+use Application\Http\Controllers\Users\Web\GetFormUserController;
+use Application\Http\Controllers\Users\Web\SearchUserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +18,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+Route::group(['prefix' => 'user'], function () {
+    Route::get('/', GetFormUserController::class)->name('form.user');
+    Route::get('/user-info', SearchUserController::class)->name('info.user');
+});
+

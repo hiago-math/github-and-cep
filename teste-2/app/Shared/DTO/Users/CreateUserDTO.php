@@ -115,13 +115,13 @@ class CreateUserDTO extends DTOAbstract
     public function register(
         int $github_id,
         string $url,
-        string $name,
         string $login,
         string $type,
         string $node_id,
         string $html_url,
         string $created_at_github,
         string $updated_at_github,
+        ?string $name= null,
         ?string $bio = null,
         ?string $company = null,
         ?string $avatar_url = null,
@@ -133,7 +133,7 @@ class CreateUserDTO extends DTOAbstract
     ): self
     {
         $this->github_id = $github_id;
-        $this->name = $name;
+        $this->name = $name ?? $login;
         $this->login = $login;
         $this->company = $company;
         $this->bio = $bio;
