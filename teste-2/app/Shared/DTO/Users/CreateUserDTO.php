@@ -147,8 +147,8 @@ class CreateUserDTO extends DTOAbstract
         $this->public_gists = $public_gists;
         $this->followers = $followers;
         $this->following = $following;
-        $this->created_at_github = Carbon::parse($created_at_github);
-        $this->updated_at_github = Carbon::parse($updated_at_github);
+        $this->created_at_github = Carbon::parse($created_at_github)->format('Y/m/d H:i:s');
+        $this->updated_at_github = Carbon::parse($updated_at_github)->format('Y/m/d H:i:s');
 
         return $this;
     }

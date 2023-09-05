@@ -19,11 +19,7 @@ class Timestamp implements CastsAttributes
      */
     public function get($model, string $key, $value, array $attributes)
     {
-       if (is_numeric($value)) {
-           return $value ? Carbon::parse($value)->timezone(config('app.timezone'))->format('Y/m/d H:i:s') : null;
-       }
-
-        return $value ? Carbon::createFromTimestamp($value)->timezone(config('app.timezone'))->format('Y/m/d H:i:s') : null;
+        return $value ? Carbon::parse($value)->timezone(config('app.timezone'))->format('Y/m/d H:i:s') : null;
     }
 
     /**
