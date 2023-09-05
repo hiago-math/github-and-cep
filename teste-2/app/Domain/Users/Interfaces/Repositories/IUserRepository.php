@@ -11,7 +11,7 @@ interface IUserRepository
      * @param string $login
      * @return Collection
      */
-    public function getUserByLogin(string $login): Collection;
+    public function findUserByLogin(string $login): Collection;
 
     /**
      * @param CreateUserDTO $createUserDto

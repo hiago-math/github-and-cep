@@ -120,4 +120,31 @@ if (!function_exists('send_log')) {
     }
 }
 
+if (!function_exists('remove_mask_zip_code')) {
+
+    /**
+     * @param string $zip_code
+     * @return string
+     */
+    function remove_mask_zip_code(string $zip_code): string
+    {
+        return str_replace('-', '', $zip_code);
+    }
+}
+
+if (!function_exists('add_extension')) {
+
+    /**
+     * @param string $zip_code
+     * @return string
+     */
+    function add_extension(string $filename, string $extension): string
+    {
+       $extensionFile = Str::afterLast($filename, '.');
+       if ($extensionFile === $extension) return $filename;
+
+       return "$filename.$extension";
+    }
+}
+
 

@@ -6,5 +6,6 @@ return [
     'AMBIENTE' => env('APP_ENV'),
 
     //API's Externas
-    'SERVICE_GITHUB_URL' => env('SERVICE_GITHUB_URL')
+    'SERVICE_GITHUB_URL' => env('SERVICE_GITHUB_URL'),
+    'SERVICE_VIACEP_URL' => env('SERVICE_VIACEP_URL'),
 ];

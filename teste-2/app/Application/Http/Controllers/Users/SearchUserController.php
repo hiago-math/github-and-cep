@@ -26,6 +26,5 @@ class SearchUserController extends Controller
 
             return $this->response_fail([], trans('default.internal_server_error'), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
-
     }
 }

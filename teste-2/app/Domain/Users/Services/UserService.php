@@ -32,12 +32,11 @@ class UserService implements IUserService
     }
 
     /**
-     * @param string $username
-     * @return Collection
+     * {@inheritDoc}
      */
     public function getUserByUsername(string $username): Collection
     {
-        $user = $this->userRepository->getUserByLogin($username);
+        $user = $this->userRepository->findUserByLogin($username);
 
         if($user->isEmpty()) {
             $user = $this->gitHubApi->getUserByUsername($username);
@@ -45,19 +44,22 @@ class UserService implements IUserService
             $user = $this->createUser($newCreateUserDto);
         }
 
-        return collect($user);
+        return $user;
     }
 
     /**
-     * @param CreateUserDTO $createUserDto
-     * @return Collection
+     * {@inheritDoc}
      */
     public function createUser(CreateUserDTO $createUserDto): Collection
     {
         return $this->userRepository->createUser($this->createUserDto);
     }
 
-    private function prepareCreateUserDtoByResponse(Collection $userBygithub)
+    /**
+     * @param Collection $userBygithub
+     * @return CreateUserDTO
+     */
+    private function prepareCreateUserDtoByResponse(Collection $userBygithub): CreateUserDTO
     {
         return $this->createUserDto->register(
             $userBygithub->get('id'),

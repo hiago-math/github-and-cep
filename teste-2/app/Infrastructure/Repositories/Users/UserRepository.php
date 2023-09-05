@@ -18,7 +18,7 @@ class UserRepository extends RepositoryAbstract implements IUserRepository
     /**
      * {@inheritDoc}
      */
-    public function getUserByLogin(string $login): Collection
+    public function findUserByLogin(string $login): Collection
     {
         $user = $this->getModel()
                 ->where('login', $login)
@@ -33,7 +33,8 @@ class UserRepository extends RepositoryAbstract implements IUserRepository
      */
     public function createUser(CreateUserDTO $createUserDto): Collection
     {
-        $userCreated = $this->getModel()->firstOrCreate(
+        $userCreated = $this->getModel()
+            ->firstOrCreate(
             [
                 'login' => $createUserDto->login
             ],

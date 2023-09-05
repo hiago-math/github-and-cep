@@ -1,6 +1,10 @@
 <?php
 
+use Application\Http\Controllers\Address\Web\CleanListAddressFormController;
+use Application\Http\Controllers\Address\Web\DownloadListAddressFormController;
 use Application\Http\Controllers\Users\Web\GetFormUserController;
+use Application\Http\Controllers\Address\Web\ListAddressFormController;
+use Application\Http\Controllers\Address\Web\SearchAddressFormController;
 use Application\Http\Controllers\Users\Web\SearchUserController;
 use Illuminate\Support\Facades\Route;
 
@@ -23,5 +27,12 @@ Route::get('/', function () {
 Route::group(['prefix' => 'user'], function () {
     Route::get('/', GetFormUserController::class)->name('form.user');
     Route::get('/user-info', SearchUserController::class)->name('info.user');
+});
+
+Route::group(['prefix' => 'address'], function () {
+    Route::get('/', ListAddressFormController::class)->name('list.address');
+    Route::get('/search', SearchAddressFormController::class)->name('search.address');
+    Route::patch('/clean', CleanListAddressFormController::class)->name('clean.address');
+    Route::get('/download', DownloadListAddressFormController::class)->name('download.list.address');
 });
 

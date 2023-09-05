@@ -7,9 +7,8 @@ use Throwable;
 
 class InvalidResponseException extends BaseExcpetion
 {
-    public function __construct($code = 0, Throwable $previous = null)
+    public function __construct($message,$code = 0, Throwable $previous = null)
     {
-        $message = trans("user_git_exception.$code");
         parent::__construct($message, $code, $previous);
     }
 

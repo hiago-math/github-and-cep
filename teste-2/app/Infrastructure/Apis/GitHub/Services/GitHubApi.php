@@ -21,8 +21,8 @@ class GitHubApi extends BaseServiceApi implements IGitHubApi
     {
         $response = $this->request('GET', "users/$username");
 
-        if(!$response->get('success')) {
-            throw new InvalidResponseException($response->get('code'));
+        if (!$response->get('success')) {
+            throw new InvalidResponseException(trans("user_git_exception." . $response->get('code')));
         }
 
         return collect(json_decode($response, true));
