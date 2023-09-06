@@ -135,7 +135,8 @@ if (!function_exists('remove_mask_zip_code')) {
 if (!function_exists('add_extension')) {
 
     /**
-     * @param string $zip_code
+     * @param string $filename
+     * @param string $extension
      * @return string
      */
     function add_extension(string $filename, string $extension): string
@@ -144,6 +145,23 @@ if (!function_exists('add_extension')) {
        if ($extensionFile === $extension) return $filename;
 
        return "$filename.$extension";
+    }
+}
+
+if (!function_exists('prepare_errors_validators')) {
+
+    /**
+     * @param array $errors
+     * @return array
+     */
+    function prepare_errors_validators(array $errors): array
+    {
+        $error = [];
+        foreach ($errors as $field => $value) {
+            $error[] = $value;
+        }
+
+        return $error;
     }
 }
 

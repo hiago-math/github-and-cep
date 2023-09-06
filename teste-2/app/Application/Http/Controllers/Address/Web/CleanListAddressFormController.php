@@ -14,8 +14,6 @@ class CleanListAddressFormController extends Controller
     {
         try {
             $addressRepository->cleanAll();
-
-            return redirect()->back();
         } catch (BaseExcpetion $exception) {
             return redirect()->back()->withInput()->withErrors(['erro' => $exception->getMessage()]);
         } catch (\Exception $exception) {

@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>TESTE - 3</title>
     <style>
         body {
@@ -61,7 +62,7 @@
             background-color: red;
         }
 
-        button[class="importar"] {
+        button[class="exportar"] {
             background-color: green;
             color: #fff;
             padding: 10px 20px;
@@ -70,7 +71,7 @@
             cursor: pointer;
         }
 
-        button[class="importar"]:hover {
+        button[class="exportar"]:hover {
             background-color: darkgreen;
         }
 
@@ -132,7 +133,44 @@
                 transform: translateY(0);
             }
         }
+
+        .button-container {
+            max-width: 450px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .button-container button {
+            flex: 1;
+        }
     </style>
+    <script>
+        $(document).ready(function () {
+            $('.limpar').on('click', function () {
+                // Rota para o método PATCH
+                var route = '{{ route('clean.address') }}';
+
+                // Realiza a solicitação PATCH
+                $.ajax({
+                    url: route,
+                    type: 'PATCH',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    success: function (data) {
+                        window.location.reload();
+                    },
+                    error: function (error) {
+                        console.log(error);
+                        // Tratar erros, se necessário
+                    }
+                });
+            });
+        });
+    </script>
 </head>
 <body>
 <h1>Buscar CEP</h1>
@@ -148,45 +186,41 @@
         </div>
     @endif
 
-
     <input type="text" id="zip_code" name="zip_code" placeholder="Digite o CEP aqui..." required>
 
     <button type="submit">Buscar</button>
 </form>
-<form>
-    <form action="{{ route('clean.address') }}" method="POST">
-        @csrf
-        @method('PATCH')
 
-        <h1>Ultimos buscados</h1>
-        <button class="limpar" type="submit">Limpar</button>
+<div class="button-container">
+    <button class="limpar" >Limpar</button>
 
-        <table>
-            <thead>
+    <button class="exportar" onclick="window.location.href='{{ route('download.list.address') }}'">Exportar</button>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Cep</th>
+            <th>Logradouro</th>
+            <th>Bairro</th>
+            <th>Cidade</th>
+            <th>UF</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach ($dados as $dado)
             <tr>
-                <th>Cep</th>
-                <th>Logradouro</th>
-                <th>Bairro</th>
-                <th>Cidade</th>
-                <th>UF</th>
+                <td>{{ $dado['zip_code'] }}</td>
+                <td>{{ $dado['public_place'] }}</td>
+                <td>{{ $dado['district'] }}</td>
+                <td>{{ $dado['city'] }}</td>
+                <td>{{ $dado['uf'] }}</td>
             </tr>
-            </thead>
-            <tbody>
-            @foreach ($dados as $dado)
-                <tr>
-                    <td>{{ $dado['zip_code'] }}</td>
-                    <td>{{ $dado['public_place'] }}</td>
-                    <td>{{ $dado['district'] }}</td>
-                    <td>{{ $dado['city'] }}</td>
-                    <td>{{ $dado['uf'] }}</td>
-                </tr>
-            @endforeach
-            </tbody>
-        </table>
-    </form>
-    <form action="{{ route('download.list.address') }}" method="GET">
-        <button class="importar" type="submit">Exportar</button>
-    </form>
-</form>
+        @endforeach
+        </tbody>
+    </table>
+</div>
+
+
+
 </body>
 </html>
