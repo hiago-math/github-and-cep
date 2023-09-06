@@ -23,7 +23,7 @@ services:
 
     app:
         container_name: app
-        hostname: teste-2.localhost
+        hostname: github-and-cep.localhost
         links:
             - mysql
         build:
