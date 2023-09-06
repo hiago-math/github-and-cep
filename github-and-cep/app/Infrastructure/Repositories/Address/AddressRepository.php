@@ -63,7 +63,7 @@ class AddressRepository extends RepositoryAbstract implements IAddressRepository
                 'uf',
             ])
             ->where('is_visible', true)
-            ->orderBy('created_at', 'desc')
+            ->orderBy('updated_at', 'desc')
             ->get()
             ->toArray();
 

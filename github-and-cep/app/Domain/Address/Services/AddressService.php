@@ -57,8 +57,7 @@ class AddressService implements IAddressService
     }
 
     /**
-     * @param Collection $response
-     * @return CreateAddressDTO
+     * {@inheritDoc}
      */
     private function prepareCreateAddressDtoByResponse(Collection $response): CreateAddressDTO
     {
@@ -77,11 +76,16 @@ class AddressService implements IAddressService
     }
 
     /**
-     * @param string $zipCode
-     * @return Collection
+     * {@inheritDoc}
      */
-    public function getAddress(): Collection
+    public function returnHeadersForCsv(): array
     {
-        // TODO: Implement getAddress() method.
+        return [
+            'CEP',
+            'LOGRADOURO',
+            'BAIRRO',
+            'CIDADE',
+            'UF',
+        ];
     }
 }

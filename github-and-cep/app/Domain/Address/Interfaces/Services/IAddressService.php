@@ -18,4 +18,9 @@ interface IAddressService
      * @return Collection
      */
     public function createAddress(CreateAddressDTO $createUserDto): Collection;
+
+    /**
+     * @return array
+     */
+    public function returnHeadersForCsv(): array ;
 }
