@@ -1,7 +1,7 @@
 <?php
 
-
-use Application\Http\Controllers\Address\DownloadListAddressController;
+use Application\Http\Controllers\Address\CleanListAddressController;
+use Application\Http\Controllers\Address\DownloadCsvListAddressController;
 use Application\Http\Controllers\Address\ListAddressController;
 use Application\Http\Controllers\Address\SearchAddressController;
 use Illuminate\Support\Facades\Route;
@@ -20,5 +20,6 @@ use Illuminate\Support\Facades\Route;
 Route::group(['prefix' => 'address'], function () {
     Route::get('', ListAddressController::class);
     Route::get('search', SearchAddressController::class);
-    Route::get('download-csv', DownloadListAddressController::class);
+    Route::get('download-csv', DownloadCsvListAddressController::class);
+    Route::patch('clean-list', CleanListAddressController::class);
 });

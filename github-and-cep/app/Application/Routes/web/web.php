@@ -1,7 +1,7 @@
 <?php
 
 use Application\Http\Controllers\Address\Web\CleanListAddressFormController;
-use Application\Http\Controllers\Address\Web\DownloadListAddressFormController;
+use Application\Http\Controllers\Address\Web\DownloadCsvListAddressFormController;
 use Application\Http\Controllers\Users\Web\GetFormUserController;
 use Application\Http\Controllers\Address\Web\ListAddressFormController;
 use Application\Http\Controllers\Address\Web\SearchAddressFormController;
@@ -33,6 +33,6 @@ Route::group(['prefix' => 'address'], function () {
     Route::get('/', ListAddressFormController::class)->name('list.address');
     Route::get('/search', SearchAddressFormController::class)->name('search.address');
     Route::patch('/clean', CleanListAddressFormController::class)->name('clean.address');
-    Route::get('/download', DownloadListAddressFormController::class)->name('download.list.address');
+    Route::get('/download', DownloadCsvListAddressFormController::class)->name('download.list.address');
 });
 

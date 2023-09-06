@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\Http\Controllers\Address;
+namespace Application\Http\Controllers\Address\Web;
 
 use Application\Exceptions\BaseExcpetion;
 use Application\Http\Controllers\Controller;
@@ -9,7 +9,7 @@ use Domain\Address\Interfaces\Services\IAddressService;
 use Domain\Exporter\Actions\ExporterCsvAction;
 use Shared\DTO\Exporter\ExporterCsvDTO;
 
-class DownloadListAddressController extends Controller
+class DownloadCsvListAddressFormController extends Controller
 {
     public function __invoke(
         ExporterCsvDTO $exporterCsvDto,
