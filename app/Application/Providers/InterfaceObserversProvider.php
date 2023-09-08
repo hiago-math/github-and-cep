@@ -54,8 +54,8 @@ class InterfaceObserversProvider extends ServiceProvider
             $dirIServices = str_replace('change_domains', $domain, $dirDomains) . "Services";
             $dirIRepositorios = str_replace('change_domains', $domain, $dirDomains) . "Repositories";
 
-            $this->folders[] = $this->carregarArquivos($dirIServices, $domain);
-            $this->folders[] = $this->carregarArquivos($dirIRepositorios, $domain);
+            $this->carregarArquivos($dirIServices, $domain);
+            $this->carregarArquivos($dirIRepositorios, $domain);
         }
     }
 
@@ -69,10 +69,11 @@ class InterfaceObserversProvider extends ServiceProvider
                 $bind = null;
                 switch ($this->identifyTipo($abstract)) {
                     case 'srv':
-                        $file = base_path('app' . DIRECTORY_SEPARATOR . 'Domain' . DIRECTORY_SEPARATOR . $domain . DIRECTORY_SEPARATOR . 'Services' . DIRECTORY_SEPARATOR . $concrete . '.php');;
+                        $file = base_path('app' . DIRECTORY_SEPARATOR . 'Domain' . DIRECTORY_SEPARATOR . $domain . DIRECTORY_SEPARATOR . 'Services' . DIRECTORY_SEPARATOR . $concrete . '.php');
+
                         if (File::isFile($file)) {
                             $bind = "Domain\\$domain\\Services\\$concrete";
-                            return [
+                            $this->folders[] = [
                                 'abstract' => "Domain\\" . $domain . "\\Interfaces\Services\\" . $abstract,
                                 'concrete' => $bind
                             ];
@@ -81,9 +82,10 @@ class InterfaceObserversProvider extends ServiceProvider
 
                     case 'repo':
                         $file = base_path('app' . DIRECTORY_SEPARATOR . 'Infrastructure/Repositories' . DIRECTORY_SEPARATOR . $domain . DIRECTORY_SEPARATOR . $concrete . '.php');
+
                         if (File::isFile($file)) {
                             $bind = "Infrastructure\Repositories\\$domain\\$concrete";
-                            return [
+                            $this->folders[] = [
                                 'abstract' => "Domain\\" . $domain . "\\Interfaces\Repositories\\" . $abstract,
                                 'concrete' => $bind
                             ];
@@ -93,7 +95,7 @@ class InterfaceObserversProvider extends ServiceProvider
                         $file = base_path('app' . DIRECTORY_SEPARATOR . 'Infrastructure/Apis' . DIRECTORY_SEPARATOR . $domain . DIRECTORY_SEPARATOR . 'Services' . DIRECTORY_SEPARATOR . $concrete . '.php');
                         if (File::isFile($file)) {
                             $bind = "Infrastructure\\Apis\\$domain\\Services\\$concrete";
-                            return [
+                            $this->folders[] = [
                                 'abstract' => "Infrastructure\\Apis\\" . $domain . "\\Interfaces\\" . $abstract,
                                 'concrete' => $bind
                             ];
@@ -119,3 +121,4 @@ class InterfaceObserversProvider extends ServiceProvider
         }
     }
 }
+
